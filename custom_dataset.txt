@@ -1,0 +1,12 @@
+# CUSTOM DATASET USED
+
+Artificial intelligence is transforming the world. 
+Language models are a significant part of AI research and development.
+Training a language model requires a large amount of data.
+Deep learning frameworks like PyTorch and TensorFlow simplify model training.
+Natural Language Processing (NLP) is a key area where language models are applied.
+Applications of NLP include chatbots, translation, and summarization.
+The success of language models depends on the quality and diversity of the dataset.
+Custom datasets can be tailored for domain-specific applications.
+Efficient training pipelines are necessary to handle large datasets and compute resources.
+Fine-tuning pretrained models on custom datasets can improve performance.
