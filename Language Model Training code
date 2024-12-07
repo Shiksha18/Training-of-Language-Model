@@ -1,5 +1,5 @@
 # Author: Shiksha Mishra
-# Pipeline for training a language model from scratch using a custom dataset
+# Pipeline for training a language model from scratch using custom_dataset.txt
 
 import os
 import torch
@@ -9,6 +9,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, AdamW, get_schedul
 # Step 1: Prepare Custom Dataset
 class CustomTextDataset(Dataset):
     def __init__(self, file_path, tokenizer, block_size=128):
+        # Read and preprocess the custom dataset
         with open(file_path, 'r', encoding='utf-8') as f:
             text = f.read()
         self.tokenizer = tokenizer
@@ -23,15 +24,20 @@ class CustomTextDataset(Dataset):
 
 # Step 2: Define Training Parameters
 def train_language_model(dataset_path, model_name="gpt2", epochs=3, batch_size=8, lr=5e-5):
+    # Load pretrained tokenizer and model
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
+    
+    # Load the dataset
     dataset = CustomTextDataset(dataset_path, tokenizer)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
+    # Define optimizer and scheduler
     optimizer = AdamW(model.parameters(), lr=lr)
     num_training_steps = epochs * len(dataloader)
     scheduler = get_scheduler("linear", optimizer=optimizer, num_warmup_steps=0, num_training_steps=num_training_steps)
 
+    # Use GPU if available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
@@ -58,11 +64,11 @@ def train_language_model(dataset_path, model_name="gpt2", epochs=3, batch_size=8
 
 # Step 3: Run the Training Pipeline
 if __name__ == "__main__":
-    # Replace 'custom_dataset.txt' with the path to your dataset
-    dataset_path = "custom_dataset.txt"
+    dataset_path = "custom_dataset.txt"  # Path to custom_dataset.txt
     if not os.path.exists(dataset_path):
-        print("Dataset not found! Please provide a valid dataset.")
+        print("Dataset not found! Please provide a valid custom_dataset.txt file.")
     else:
         train_language_model(dataset_path)
 
 # Script by Shiksha Mishra
+
